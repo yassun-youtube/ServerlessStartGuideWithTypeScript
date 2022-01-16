@@ -5,7 +5,7 @@ import hello from '@functions/hello';
 const serverlessConfiguration: AWS = {
   service: 'serverless-test-app',
   frameworkVersion: '2',
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-dynamodb-local', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -23,6 +23,32 @@ const serverlessConfiguration: AWS = {
   // import the function via paths
   functions: { hello },
   package: { individually: true },
+  resources: {
+    Resources: {
+      usersTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'usersTable',
+          AttributeDefinitions: [
+            {
+              AttributeName: 'email',
+              AttributeType: 'S'
+            }
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'email',
+              KeyType: 'HASH'
+            }
+          ],
+          ProvisionedThroughput: {
+            'ReadCapacityUnits': 1,
+            'WriteCapacityUnits': 1
+          }
+        }
+      }
+    }
+  },
   custom: {
     esbuild: {
       bundle: true,
@@ -34,6 +60,18 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
+    dynamodb: {
+      stages: ['dev'],
+      start: {
+        port: 8000,
+        dbPath: 'dynamodb',
+        heapInitial: '200m',
+        heapMax: '1g',
+        migrate: true,
+        seed: true,
+        convertEmptyValues: true,
+      }
+    }
   },
 };
 
