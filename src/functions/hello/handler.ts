@@ -1,15 +1,11 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-import { DynamoDB } from 'aws-sdk'
+import { dynamodb } from "@libs/dynamodb";
 
 import schema from './schema';
 
 const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const dynamodb = new DynamoDB.DocumentClient({
-    region: 'localhost',
-    endpoint: 'http://localhost:8000',
-  })
   await dynamodb.put({
     TableName: 'usersTable',
     Item: {

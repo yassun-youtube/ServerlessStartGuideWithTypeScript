@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "serverless dynamodb install",
     "dev": "serverless offline start",
-    "deploy": "serverless deploy --aws-profile serverless-test",
+    "deploy": "export NODE_ENV=production && serverless deploy --aws-profile serverless-test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {

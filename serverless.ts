@@ -17,8 +17,17 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      NODE_ENV: process.env.NODE_ENV,
     },
     lambdaHashingVersion: '20201221',
+    iam: {
+      role: {
+        managedPolicies: [
+          'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+          'arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess',
+        ]
+      }
+    }
   },
   // import the function via paths
   functions: { hello },
