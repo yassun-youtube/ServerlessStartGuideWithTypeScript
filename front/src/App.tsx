@@ -1,21 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Configuration, UserApi } from "./api-client";
 
 function App() {
   async function createUser() {
-    const response = await fetch('/dev/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: 'test@example.com',
-        username: 'test'
-      })
+    const api = new UserApi(new Configuration({ basePath: '/dev/' }))
+    const response = await api.createUser({
+      createUser: {
+        email: 'test2@example.com',
+        username: 'test2',
+      }
     })
-    const body = await response.json()
-    console.log(body)
+    console.log(response.message)
   }
 
   return (

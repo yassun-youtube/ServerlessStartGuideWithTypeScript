@@ -17,8 +17,13 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
+  "resolutions": {
+    "mini-css-extract-plugin": "2.4.5"
+  },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
+    "generate-client": "openapi-generator-cli generate -g typescript-fetch -i openapi/openapi.yaml -o ./src/api-client --additional-properties=typescriptThreePlus=true",
+    "generate-api-doc": "redoc-cli bundle openapi/openapi.yaml",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -40,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.25",
+    "redoc-cli": "^0.13.2"
   }
 }

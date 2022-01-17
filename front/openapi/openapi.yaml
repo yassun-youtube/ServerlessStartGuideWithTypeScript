@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  description: Test API
+  version: 1.0.0
+  title: Test API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: test@yassun.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: /
+tags:
+  - name: user
+    description: ユーザ
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: ユーザ作成
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        200:
+          description: 作成成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [message]
+                properties:
+                  message: { type: string }
+components:
+  schemas:
+    CreateUser:
+      type: object
+      required: [email, username]
+      properties:
+        email: { type: string }
+        username: { type: string }
+        age: { type: integer }
