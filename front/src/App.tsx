@@ -3,6 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  async function createUser() {
+    const response = await fetch('/dev/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: 'test@example.com',
+        username: 'test'
+      })
+    })
+    const body = await response.json()
+    console.log(body)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +25,12 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
+        <button
           className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={createUser}
         >
-          Learn React
-        </a>
+          Create User!
+        </button>
       </header>
     </div>
   );
