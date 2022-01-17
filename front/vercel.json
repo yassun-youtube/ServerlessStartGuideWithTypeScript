@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/dev/:path*",
+      "destination": "https://wguv32ddzl.execute-api.ap-northeast-1.amazonaws.com/dev/:path*"
+    }
+  ]
+}
